@@ -10,23 +10,29 @@
         <div id="logo-div">
             <img id="logo-img" src="./images/todologo.png" alt="Logo">
         </div>
-        <button type="button" class="nav-btn">Tasks</button>
+        <button type="button" class="nav-btn">Add Task</button>
         <button type="button" class="nav-btn">Projects</button>
     </nav>
-    <!-- <div id="content">
-        <div class="title">
-            <h1>Current Tasks</h1>
-        </div>
-        <div class="tasks-container">
-            <div class="tasks-card">
-                <h3 class="tasks-title">My Task</h3>
-                <div class="tasks-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                <div class="tasks-due">Due Date: 11/69/1969</div>
-                <div class="tasks-prio">Priority: High Priority</div>
-                <button class="tasks-complete">Complete</button>
-                <button class="tasks-rmv">Remove</button>
+    <dialog>
+        <h1>New Task</h1>
+        <form method="dialog" action="#" id="add-task-form">
+            <h3>Title</h3>
+            <input type="text" autofocus required id="new-title">
+            <h3>Description</h3>
+            <textarea name="desc" id="new-desc"></textarea>
+            <h3>Due Date</h3>
+            <input type="date" name="date-picker" id="new-date" required>
+            <h3>Priority</h3>
+            <select name="priority" id="new-priority">
+                <option value="Low Priority">Low Priority</option>
+                <option value="Medium Priority">Medium Priority</option>
+                <option value="High Priority">High Priority</option>
+            </select>
+            <div>
+                <button type="submit">Add</button>
+                <button type="button" id="dialog-cancel-btn">Cancel</button>
             </div>
-        </div>
-    </div> -->
+        </form>
+    </dialog>
 </body>
 </html>

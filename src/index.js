@@ -1,22 +1,47 @@
 import "./styles.css";
 import { Tasks } from "./tasks";
 import { Projects } from "./projects";
-import { display, generateContentContainer } from "./displayController";
+import { display, generateContentContainer, clearContent } from "./displayController";
 
+const projectList = [];
+const defaultProject = Projects("Current Tasks");
+projectList.push(defaultProject);
 
-(function main () {
+(function preLoad () {
     const newTask = Tasks("Water", "Water all the plants", "12/12/1922", "High Priority", false);
-    const newProject = Projects("Current Tasks");
-    newProject.addTaskToProject(newTask);
-
+    
+    defaultProject.addTaskToProject(newTask);
     const newTask2 = Tasks("Test", "Water all the plants", "12/12/1922", "High Priority", false);
-    newProject.addTaskToProject(newTask2);
+    defaultProject.addTaskToProject(newTask2);
 
     const newProject2 = Projects("Test");
 
     newProject2.addTaskToProject(newTask);
 
     generateContentContainer();
-    display(newProject);
-    display(newProject2);
+    display(defaultProject);
+
+    document.querySelector("dialog").showModal();
+    
 })();
+
+function createNewTask () {
+    const title = document.querySelector("#new-title").value;
+    const desc = document.querySelector("#new-desc").value;
+    const date = document.querySelector("#new-date").value;
+    const prio = document.querySelector("#new-priority").value;
+
+    const task = Tasks(title, desc, date, prio, false);
+    defaultProject.addTaskToProject(task);
+
+    clearContent();
+    generateContentContainer();
+    display(defaultProject);
+}
+
+//event listeners
+document.querySelector("#dialog-cancel-btn").addEventListener("click", () => {
+    document.querySelector("dialog").close();
+});
+
+document.querySelector("#add-task-form").addEventListener("submit", createNewTask);

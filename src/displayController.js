@@ -65,3 +65,7 @@ function generateTask(task, divTasksContainer) {
     removeBtn.textContent = "Remove";
     card.appendChild(removeBtn);
 }
+
+export function clearContent () {
+    document.querySelector("#content").remove();
+}
