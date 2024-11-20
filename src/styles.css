@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--font-color);
+    font-family: "Roboto", sans-serif;
+}
+
+:root {
+    --main-color: #151515;
+    --secondary-color: #A91D3A;
+    --tertiary-color: #C73659;
+    --font-color: #EEEEEE;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 20vw 1fr;
+}
+
+nav {
+    background-color: var(--secondary-color);
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 25vh repeat(3, 10vh);
+}
+
+#content {
+    background-color: var(--main-color);
+}
+
+#logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#logo-div {
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.nav-btn {
+    background-color: #15151500;
+    font-family: "Lato", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    text-shadow: 5px 5px 5px var(--main-color);
+    border: none;
+    cursor: pointer;
+    /* letter-spacing: 0.3rem; */
+}
+
+.nav-btn:hover {
+    background-color: var(--tertiary-color);
+}
