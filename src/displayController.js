@@ -67,10 +67,21 @@ function generateTask(task, divTasksContainer, index, project) {
     removeBtn.textContent = "Remove";
     card.appendChild(removeBtn);
 
-
+// Rmv and complete btn event listener
     removeBtn.addEventListener("click", () => {
         removeTaskCard(card, index, project);
     }); 
+
+    completeBtn.addEventListener("click", () => {
+        completeTask(task, completeBtn);
+    });
+}
+
+function completeTask (task, completeBtn) {
+    task.isComplete = true;
+    completeBtn.disabled = true;
+    completeBtn.classList.add("tasks-done-btn");
+    completeBtn.textContent = "Completed!";
 }
 
 function removeTaskCard (card, index, project) {
@@ -82,7 +93,7 @@ export function clearContent () {
     document.querySelector("#content").remove();
 }
 
-//event listeners
+//Add Task event listeners
 document.querySelector("#dialog-cancel-btn").addEventListener("click", () => {
     document.querySelector("dialog").close();
 });

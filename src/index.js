@@ -5,7 +5,7 @@ const projectList = [];
 const defaultProject = Projects("Current Tasks");
 projectList.push(defaultProject);
 
-(function preLoad () {
+(function initialLoad () {
     const newTask = Tasks("Water", "Water all the plants", "12/12/1922", "High Priority", false);
     
     defaultProject.addTaskToProject(newTask);
@@ -19,7 +19,7 @@ projectList.push(defaultProject);
     generateContentContainer();
     display(defaultProject);
 
-    document.querySelector("dialog").showModal();
+    // document.querySelector("dialog").showModal();
     
 })();
 
@@ -42,7 +42,6 @@ function Projects (projName) {
 
     function addTaskToProject (newTask) {
         allTasks.push(newTask);
-        console.log(allTasks);
     }
 
     function getTasks () {
@@ -51,7 +50,6 @@ function Projects (projName) {
 
     function removeTask (index) {
         allTasks.splice(index, 1);
-        console.log(allTasks);
     }
 
     return {projName, addTaskToProject, getTasks, removeTask};

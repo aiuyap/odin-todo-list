@@ -90,6 +90,16 @@ nav {
     height: 2rem;
     align-self: center;
     justify-self: center;
+    cursor: pointer;
+}
+
+.tasks-done-btn {
+    background-color: var(--secondary-color) !important;
+    color: skyblue;
+}
+
+.tasks-card button:hover {
+    background-color: var(--tertiary-color);
 }
 
 h3 {
