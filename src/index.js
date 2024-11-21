@@ -12,15 +12,8 @@ projectList.push(defaultProject);
     const newTask2 = Tasks("Test", "Water all the plants", "12/12/1922", "High Priority", false);
     defaultProject.addTaskToProject(newTask2);
 
-    const newProject2 = Projects("Test");
-
-    newProject2.addTaskToProject(newTask);
-
     generateContentContainer();
     display(defaultProject);
-
-    // document.querySelector("dialog").showModal();
-    
 })();
 
 export function createNewTask () {

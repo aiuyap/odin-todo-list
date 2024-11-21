@@ -3,6 +3,7 @@ import { createNewTask } from "./index";
 export function display(project) {
     const tasks = project.getTasks();
     const divTasksContainer = generateProjectTitle(project.projName);
+    generateAddTaskButton(divTasksContainer);
     tasks.forEach((task, index) => {
         generateTask(task, divTasksContainer, index, project);
     });
@@ -91,6 +92,22 @@ function removeTaskCard (card, index, project) {
 
 export function clearContent () {
     document.querySelector("#content").remove();
+}
+
+export function generateAddTaskButton (divTasksContainer) {
+    const card = document.createElement("div");
+    card.classList.add("tasks-card");
+    card.id = "add-btn-card";
+    divTasksContainer.appendChild(card);
+
+    const addBtn = document.createElement("button");
+    addBtn.textContent = "+ New Task";
+    addBtn.id = "add-btn";
+    card.appendChild(addBtn);
+
+    addBtn.addEventListener("click", () => {
+        document.querySelector("dialog").showModal();
+    })
 }
 
 //Add Task event listeners
