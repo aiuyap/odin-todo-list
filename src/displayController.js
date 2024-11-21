@@ -44,9 +44,12 @@ function generateTask(task, divTasksContainer, index, project) {
     title.textContent = task.title;
 
     const desc = document.createElement("div");
+    const descP = document.createElement("p");
     desc.classList.add("tasks-desc");
+    descP.classList.add("tasks-desc");
     card.appendChild(desc);
-    desc.textContent = task.description;
+    desc.appendChild(descP);
+    descP.textContent = task.description;
 
     const dueDate = document.createElement("div");
     dueDate.classList.add("tasks-due");
@@ -62,6 +65,11 @@ function generateTask(task, divTasksContainer, index, project) {
     completeBtn.classList.add("tasks-complete");
     completeBtn.textContent = "Complete";
     card.appendChild(completeBtn);
+
+    if(task.isComplete) {
+        completeBtn.classList.add("tasks-done-btn");
+        completeBtn.textContent = "Done! ✔";
+    }
 
     const removeBtn = document.createElement("button");
     removeBtn.classList.add("tasks-rmv");
@@ -82,7 +90,7 @@ function completeTask (task, completeBtn) {
     task.isComplete = true;
     completeBtn.disabled = true;
     completeBtn.classList.add("tasks-done-btn");
-    completeBtn.textContent = "Completed!";
+    completeBtn.textContent = "Done! ✔";
 }
 
 function removeTaskCard (card, index, project) {
@@ -106,7 +114,7 @@ function generateAddTaskButton (divTasksContainer, project) {
     card.appendChild(addBtn);
 
     addBtn.addEventListener("click", () => {
-        document.querySelector("dialog").showModal();
+        document.querySelector("#add-task-dialog").showModal();
         addTaskListener(project);
     })
 }
@@ -121,8 +129,11 @@ function addTaskListener (project) {
 (function addingEventListenerModule () {
     //Dialog rmv btn event listeners
     document.querySelector("#dialog-cancel-btn").addEventListener("click", () => {
-        document.querySelector("dialog").close();
+        document.querySelector("#add-task-dialog").close();
     });
+    document.querySelector("#project-cancel-btn").addEventListener("click", () => {
+        document.querySelector("#add-project-dialog").close();
+    })
     //Navbar event listeners
     document.querySelector("#view-projects").addEventListener("click", () => {
         clearContent();
@@ -142,9 +153,25 @@ function addTaskListener (project) {
 function displayAllProjects () {
     const AllProjects = getAllProjectList();
     const divTasksContainer = generateTitle("All Projects");
-    
+    generateAddProjectButton(divTasksContainer);
+
     AllProjects.forEach((proj, index) => {
         generateProjectCards(divTasksContainer, proj, index, AllProjects);
+    });
+}
+
+function generateAddProjectButton (divTasksContainer) {
+    const card = document.createElement("div");
+    card.classList.add("proj-card");
+    divTasksContainer.appendChild(card);
+
+    const addBtn = document.createElement("button");
+    addBtn.textContent = "+ New Project";
+    addBtn.id = "add-proj-btn";
+    card.appendChild(addBtn);
+
+    addBtn.addEventListener("click", () => {
+        document.querySelector("#add-project-dialog").showModal();
     });
 }
 
@@ -159,7 +186,7 @@ function generateProjectCards (divTasksContainer, proj, index, AllProjects) {
     title.textContent = proj.projName;
 
     const viewBtn = document.createElement("button");
-    viewBtn.textContent = "View Project";
+    viewBtn.textContent = "View";
     card.appendChild(viewBtn);
 
     if (index !== 0) {
@@ -167,11 +194,17 @@ function generateProjectCards (divTasksContainer, proj, index, AllProjects) {
         removeBtn.textContent = "Remove";
         card.appendChild(removeBtn);
 
-        // View and Rmv event listeners
+        //Rmv btn event listener
         removeBtn.addEventListener("click", () => {
             removeProject(card, AllProjects, index);
         });
     }
+    //View btn event listener
+    viewBtn.addEventListener("click", ()=> {
+        clearContent();
+        generateContentContainer();
+        display(proj);
+    });
 }
 
 function removeProject (card, AllProjects, index) {

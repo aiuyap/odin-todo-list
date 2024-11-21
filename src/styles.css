@@ -75,11 +75,11 @@ nav {
 .tasks-card,
 .proj-card {
     width: 300px;
-    height: 300px;
+    min-height: 300px;
     background-color: var(--secondary-color);
     border-radius: 15px;
     display: grid;
-    grid-template-rows: 1fr 3fr repeat(2, 30px) repeat(2, 40px);
+    grid-template-rows: 1fr 90px repeat(2, 30px) repeat(2, 40px);
     padding: 1rem;
 }
 
@@ -110,7 +110,8 @@ nav {
 
 .tasks-done-btn {
     background-color: var(--secondary-color) !important;
-    color: skyblue;
+    font-weight: 900;
+    color: greenyellow;
 }
 
 .tasks-card button:hover,
@@ -191,7 +192,8 @@ form {
     height: 470px;
 }
 
-#add-btn {
+#add-btn,
+#add-proj-btn {
     height: 10rem;
     width: 13rem;
     font-size: 1.5rem;
@@ -203,4 +205,30 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.tasks-due,
+.tasks-prio {
+    font-size: 0.8rem;
+}
+
+.tasks-card div,
+.tasks-card h3{
+    width: 100%;
+    overflow-wrap: break-word;
+}
+
+#add-project-form {
+    display: grid;
+    grid-template-rows: 20px 35px 1fr;
+    padding-top: 10px;
+}
+
+#add-project-dialog {
+    height: 15rem;
+    overflow: hidden;
+}
+
+#add-project-dialog button {
+    height: 3rem;
 }
