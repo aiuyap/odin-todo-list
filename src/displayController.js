@@ -1,4 +1,5 @@
 import { createNewTask, getAllProjectList, addNewProjectToArr } from "./index";
+import { save } from "./localStorage";
 
 export function display(project) {
     const tasks = project.getTasks();
@@ -78,7 +79,13 @@ function generateTask(task, divTasksContainer, index, project) {
 
 // Rmv and complete btn event listener
     removeBtn.addEventListener("click", () => {
-        removeTaskCard(card, index, project);
+        //  removeTaskCard(card, index, project);
+        const allTask = project.getTasks();
+        allTask.forEach((t, i) => {
+            if (t.title === task.title) {
+                removeTaskCard(card, i, project);
+            }
+        });
     }); 
 
     completeBtn.addEventListener("click", () => {
@@ -96,6 +103,7 @@ function completeTask (task, completeBtn) {
 function removeTaskCard (card, index, project) {
     card.remove();
     project.removeTask(index);
+    save();
 };
 
 export function clearContent () {
@@ -122,6 +130,7 @@ function generateAddTaskButton (divTasksContainer, project) {
 function addTaskListener (project) {
     document.querySelector("#add-task-form").onsubmit = () => {
         createNewTask(project);
+        save();
     };
 }
 
@@ -154,9 +163,10 @@ function addNewProject () {
         const allProjects = getAllProjectList();
         display(allProjects[0]);
     });
-    document.querySelector("#add-project-form").addEventListener("submit", () => {
+    document.querySelector("#add-project-form").onsubmit = function() {
         addNewProject();
-    });
+        save();
+    };
 })();
 
 function displayAllProjects () {
@@ -204,19 +214,24 @@ function generateProjectCards (divTasksContainer, proj, index, AllProjects) {
         card.appendChild(removeBtn);
 
         //Rmv btn event listener
-        removeBtn.addEventListener("click", () => {
-            removeProject(card, AllProjects, index);
+        removeBtn.addEventListener("click", function () {
+            removeProject(card, AllProjects, proj);
         });
     }
     //View btn event listener
-    viewBtn.addEventListener("click", ()=> {
+    viewBtn.addEventListener("click", () => {
         clearContent();
         generateContentContainer();
         display(proj);
     });
 }
 
-function removeProject (card, AllProjects, index) {
+function removeProject (card, AllProjects, proj) {
     card.remove();
-    AllProjects.splice(index, 1);
+    AllProjects.forEach((project, i) => {
+        if(project.projName === proj.projName) {
+            AllProjects.splice(i, 1);
+            save();
+        }
+    })
 }

@@ -1,21 +1,18 @@
 import "./styles.css";
 import { display, generateContentContainer, clearContent } from "./displayController";
+import { save, syncStorage } from "./localStorage";
 
-const projectList = [];
-const defaultProject = Projects("Current Tasks");
-projectList.push(defaultProject);
+let projectList = [];
+
 
 (function initialLoad () {
-    const newTask = Tasks("Water", "Water all the plants", "12/12/1922", "High Priority", false);
-    defaultProject.addTaskToProject(newTask);
-    const newTask2 = Tasks("Test", "Water all the plants", "12/12/1922", "High Priority", false);
-    defaultProject.addTaskToProject(newTask2);
-
-    const testProj = Projects("Test");
-    projectList.push(testProj);
-
+    if (localStorage.length === 0) {
+        const defaultProject = Projects("Current Tasks");
+        projectList.push(defaultProject);
+    }
+    syncStorage();
     generateContentContainer();
-    display(defaultProject);
+    display(projectList[0]);
 })();
 
 function Projects (projName) {
@@ -25,7 +22,7 @@ function Projects (projName) {
         allTasks.push(newTask);
     }
 
-    function getTasks () {
+    function getTasks() {
         return allTasks;
     }
 
@@ -62,7 +59,5 @@ export function addNewProjectToArr(newProjName) {
     const newProject = Projects(newProjName);
     projectList.push(newProject);
 }
-
-
 
 
