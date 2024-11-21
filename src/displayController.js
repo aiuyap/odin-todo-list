@@ -1,4 +1,4 @@
-import { createNewTask, getAllProjectList } from "./index";
+import { createNewTask, getAllProjectList, addNewProjectToArr } from "./index";
 
 export function display(project) {
     const tasks = project.getTasks();
@@ -125,6 +125,14 @@ function addTaskListener (project) {
     };
 }
 
+function addNewProject () {
+    const projectName = document.querySelector("#new-project-name").value;
+    addNewProjectToArr(projectName);
+    clearContent();
+    generateContentContainer();
+    displayAllProjects();
+}
+
 
 (function addingEventListenerModule () {
     //Dialog rmv btn event listeners
@@ -146,8 +154,9 @@ function addTaskListener (project) {
         const allProjects = getAllProjectList();
         display(allProjects[0]);
     });
-
-    return {addTaskListener};
+    document.querySelector("#add-project-form").addEventListener("submit", () => {
+        addNewProject();
+    });
 })();
 
 function displayAllProjects () {

@@ -58,6 +58,11 @@ export function getAllProjectList () {
     return projectList;
 }
 
+export function addNewProjectToArr(newProjName) {
+    const newProject = Projects(newProjName);
+    projectList.push(newProject);
+}
+
 
 
 
