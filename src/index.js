@@ -1,6 +1,4 @@
 import "./styles.css";
-import { Tasks } from "./tasks";
-import { Projects } from "./projects";
 import { display, generateContentContainer, clearContent } from "./displayController";
 
 const projectList = [];
@@ -25,7 +23,7 @@ projectList.push(defaultProject);
     
 })();
 
-function createNewTask () {
+export function createNewTask () {
     const title = document.querySelector("#new-title").value;
     const desc = document.querySelector("#new-desc").value;
     const date = document.querySelector("#new-date").value;
@@ -39,9 +37,28 @@ function createNewTask () {
     display(defaultProject);
 }
 
-//event listeners
-document.querySelector("#dialog-cancel-btn").addEventListener("click", () => {
-    document.querySelector("dialog").close();
-});
+function Projects (projName) {
+    const allTasks = [];
 
-document.querySelector("#add-task-form").addEventListener("submit", createNewTask);
+    function addTaskToProject (newTask) {
+        allTasks.push(newTask);
+        console.log(allTasks);
+    }
+
+    function getTasks () {
+        return allTasks;
+    }
+
+    function removeTask (index) {
+        allTasks.splice(index, 1);
+        console.log(allTasks);
+    }
+
+    return {projName, addTaskToProject, getTasks, removeTask};
+}
+
+function Tasks (title, description, dueDate, priority, isComplete) {
+    return {title, description, dueDate, priority, isComplete};
+}
+
+

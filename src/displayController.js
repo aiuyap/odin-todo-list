@@ -1,8 +1,10 @@
+import { createNewTask } from "./index";
+
 export function display(project) {
     const tasks = project.getTasks();
     const divTasksContainer = generateProjectTitle(project.projName);
-    tasks.forEach((task) => {
-        generateTask(task, divTasksContainer);
+    tasks.forEach((task, index) => {
+        generateTask(task, divTasksContainer, index, project);
     });
     
 }
@@ -30,7 +32,7 @@ function generateProjectTitle(title) {
     return divTasksContainer;
 }
 
-function generateTask(task, divTasksContainer) {
+function generateTask(task, divTasksContainer, index, project) {
     const card = document.createElement("div");
     card.classList.add("tasks-card");
     divTasksContainer.appendChild(card);
@@ -64,8 +66,25 @@ function generateTask(task, divTasksContainer) {
     removeBtn.classList.add("tasks-rmv");
     removeBtn.textContent = "Remove";
     card.appendChild(removeBtn);
+
+
+    removeBtn.addEventListener("click", () => {
+        removeTaskCard(card, index, project);
+    }); 
 }
+
+function removeTaskCard (card, index, project) {
+    card.remove();
+    project.removeTask(index);
+};
 
 export function clearContent () {
     document.querySelector("#content").remove();
 }
+
+//event listeners
+document.querySelector("#dialog-cancel-btn").addEventListener("click", () => {
+    document.querySelector("dialog").close();
+});
+
+document.querySelector("#add-task-form").addEventListener("submit", createNewTask);
