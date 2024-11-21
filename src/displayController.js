@@ -98,6 +98,7 @@ function completeTask (task, completeBtn) {
     completeBtn.disabled = true;
     completeBtn.classList.add("tasks-done-btn");
     completeBtn.textContent = "Done! ✔";
+    save();
 }
 
 function removeTaskCard (card, index, project) {
