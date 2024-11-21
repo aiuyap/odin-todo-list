@@ -123,7 +123,12 @@ export function generateAddTaskButton (divTasksContainer) {
         clearContent();
         generateContentContainer();
         displayAllProjects ();
-        
+    });
+    document.querySelector("#view-current-tasks").addEventListener("click", () => {
+        clearContent();
+        generateContentContainer();
+        const allProjects = getAllProjectList();
+        display(allProjects[0]);
     });
 })();
 
