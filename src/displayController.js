@@ -1,8 +1,8 @@
-import { createNewTask } from "./index";
+import { createNewTask, getAllProjectList } from "./index";
 
 export function display(project) {
     const tasks = project.getTasks();
-    const divTasksContainer = generateProjectTitle(project.projName);
+    const divTasksContainer = generateTitle(project.projName);
     generateAddTaskButton(divTasksContainer);
     tasks.forEach((task, index) => {
         generateTask(task, divTasksContainer, index, project);
@@ -16,7 +16,7 @@ export function generateContentContainer() {
     document.body.appendChild(divContent);
 }
 
-function generateProjectTitle(title) {
+function generateTitle(title) {
     const divContent = document.querySelector("#content");
     const divTitle = document.createElement("div");
     divTitle.classList.add("title");
@@ -110,9 +110,47 @@ export function generateAddTaskButton (divTasksContainer) {
     })
 }
 
-//Add Task event listeners
-document.querySelector("#dialog-cancel-btn").addEventListener("click", () => {
-    document.querySelector("dialog").close();
-});
 
-document.querySelector("#add-task-form").addEventListener("submit", createNewTask);
+(function addingEventListenerModule () {
+    //Add Task event listeners
+    document.querySelector("#dialog-cancel-btn").addEventListener("click", () => {
+        document.querySelector("dialog").close();
+    });
+    
+    document.querySelector("#add-task-form").addEventListener("submit", createNewTask);
+    //Task and Projects navbar event listeners
+    document.querySelector("#view-projects").addEventListener("click", () => {
+        clearContent();
+        generateContentContainer();
+        displayAllProjects ();
+        
+    });
+})();
+
+export function displayAllProjects () {
+    const projects = getAllProjectList();
+    const divTasksContainer = generateTitle("All Projects");
+    
+    projects.forEach((proj) => {
+        generateProjectCards(divTasksContainer, proj.projName);
+    });
+}
+
+function generateProjectCards (divTasksContainer, projectName) {
+    const card = document.createElement("div");
+    card.classList.add("proj-card");
+    divTasksContainer.appendChild(card);
+
+    const title = document.createElement("h3");
+    title.classList.add("tasks-title");
+    card.appendChild(title);
+    title.textContent = projectName;
+
+    const viewBtn = document.createElement("button");
+    viewBtn.textContent = "View Project";
+    card.appendChild(viewBtn);
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    card.appendChild(removeBtn);
+}
