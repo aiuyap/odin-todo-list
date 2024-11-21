@@ -128,15 +128,15 @@ export function generateAddTaskButton (divTasksContainer) {
 })();
 
 export function displayAllProjects () {
-    const projects = getAllProjectList();
+    const AllProjects = getAllProjectList();
     const divTasksContainer = generateTitle("All Projects");
     
-    projects.forEach((proj) => {
-        generateProjectCards(divTasksContainer, proj.projName);
+    AllProjects.forEach((proj, index) => {
+        generateProjectCards(divTasksContainer, proj, index, AllProjects);
     });
 }
 
-function generateProjectCards (divTasksContainer, projectName) {
+function generateProjectCards (divTasksContainer, proj, index, AllProjects) {
     const card = document.createElement("div");
     card.classList.add("proj-card");
     divTasksContainer.appendChild(card);
@@ -144,7 +144,7 @@ function generateProjectCards (divTasksContainer, projectName) {
     const title = document.createElement("h3");
     title.classList.add("tasks-title");
     card.appendChild(title);
-    title.textContent = projectName;
+    title.textContent = proj.projName;
 
     const viewBtn = document.createElement("button");
     viewBtn.textContent = "View Project";
@@ -153,4 +153,14 @@ function generateProjectCards (divTasksContainer, projectName) {
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "Remove";
     card.appendChild(removeBtn);
+
+    // View and Rmv event listeners
+    removeBtn.addEventListener("click", () => {
+        removeProject(card, AllProjects, index);
+    })
+}
+
+function removeProject (card, AllProjects, index) {
+    card.remove();
+    AllProjects.splice(index, 1);
 }
