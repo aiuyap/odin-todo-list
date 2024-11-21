@@ -1,5 +1,5 @@
 import "./styles.css";
-import { display, generateContentContainer, clearContent, displayAllProjects } from "./displayController";
+import { display, generateContentContainer, clearContent } from "./displayController";
 
 const projectList = [];
 const defaultProject = Projects("Current Tasks");
@@ -40,18 +40,18 @@ function Tasks (title, description, dueDate, priority, isComplete) {
     return {title, description, dueDate, priority, isComplete};
 }
 
-export function createNewTask () {
+export function createNewTask (project) {
     const title = document.querySelector("#new-title").value;
     const desc = document.querySelector("#new-desc").value;
     const date = document.querySelector("#new-date").value;
     const prio = document.querySelector("#new-priority").value;
 
     const task = Tasks(title, desc, date, prio, false);
-    defaultProject.addTaskToProject(task);
+    project.addTaskToProject(task);
 
     clearContent();
     generateContentContainer();
-    display(defaultProject);
+    display(project);
 }
 
 export function getAllProjectList () {

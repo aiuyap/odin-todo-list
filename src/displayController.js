@@ -3,7 +3,7 @@ import { createNewTask, getAllProjectList } from "./index";
 export function display(project) {
     const tasks = project.getTasks();
     const divTasksContainer = generateTitle(project.projName);
-    generateAddTaskButton(divTasksContainer);
+    generateAddTaskButton(divTasksContainer, project);
     tasks.forEach((task, index) => {
         generateTask(task, divTasksContainer, index, project);
     });
@@ -94,7 +94,7 @@ export function clearContent () {
     document.querySelector("#content").remove();
 }
 
-export function generateAddTaskButton (divTasksContainer) {
+function generateAddTaskButton (divTasksContainer, project) {
     const card = document.createElement("div");
     card.classList.add("tasks-card");
     card.id = "add-btn-card";
@@ -107,18 +107,23 @@ export function generateAddTaskButton (divTasksContainer) {
 
     addBtn.addEventListener("click", () => {
         document.querySelector("dialog").showModal();
+        addTaskListener(project);
     })
+}
+
+function addTaskListener (project) {
+    document.querySelector("#add-task-form").onsubmit = () => {
+        createNewTask(project);
+    };
 }
 
 
 (function addingEventListenerModule () {
-    //Add Task event listeners
+    //Dialog rmv btn event listeners
     document.querySelector("#dialog-cancel-btn").addEventListener("click", () => {
         document.querySelector("dialog").close();
     });
-    
-    document.querySelector("#add-task-form").addEventListener("submit", createNewTask);
-    //Task and Projects navbar event listeners
+    //Navbar event listeners
     document.querySelector("#view-projects").addEventListener("click", () => {
         clearContent();
         generateContentContainer();
@@ -130,9 +135,11 @@ export function generateAddTaskButton (divTasksContainer) {
         const allProjects = getAllProjectList();
         display(allProjects[0]);
     });
+
+    return {addTaskListener};
 })();
 
-export function displayAllProjects () {
+function displayAllProjects () {
     const AllProjects = getAllProjectList();
     const divTasksContainer = generateTitle("All Projects");
     
@@ -155,14 +162,16 @@ function generateProjectCards (divTasksContainer, proj, index, AllProjects) {
     viewBtn.textContent = "View Project";
     card.appendChild(viewBtn);
 
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "Remove";
-    card.appendChild(removeBtn);
+    if (index !== 0) {
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        card.appendChild(removeBtn);
 
-    // View and Rmv event listeners
-    removeBtn.addEventListener("click", () => {
-        removeProject(card, AllProjects, index);
-    })
+        // View and Rmv event listeners
+        removeBtn.addEventListener("click", () => {
+            removeProject(card, AllProjects, index);
+        });
+    }
 }
 
 function removeProject (card, AllProjects, index) {
